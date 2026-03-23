@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ethereum - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="nav-actions">
+                <button class="nav-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </button>
+                <button class="nav-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Crypto Header -->
+            <div class="crypto-header">
+                <div class="crypto-icon">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <path d="M24 4L12 24L24 32L36 24L24 4Z" fill="#627EEA"/>
+                        <path d="M24 4L12 24L24 20V4Z" fill="#627EEA" opacity="0.6"/>
+                        <path d="M24 34L12 26L24 44L36 26L24 34Z" fill="#627EEA"/>
+                        <path d="M24 34L12 26L24 44V34Z" fill="#627EEA" opacity="0.6"/>
+                    </svg>
+                </div>
+                <p class="crypto-name">Ethereum <span>ETH</span></p>
+                <h1 class="crypto-price">€ 1.838,92</h1>
+                <span class="price-change positive">+1,28%</span>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-container">
+                <div class="chart-placeholder">
+                    <svg width="100%" height="100%" viewBox="0 0 320 140" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1E5BFF;stop-opacity:0.15"/>
+                                <stop offset="100%" style="stop-color:#1E5BFF;stop-opacity:0"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M0 100 Q40 95 60 85 T100 70 T140 90 T180 50 T220 55 T260 40 T300 45 T320 35 V140 H0 Z" fill="url(#chartGradient)"/>
+                        <path d="M0 100 Q40 95 60 85 T100 70 T140 90 T180 50 T220 55 T260 40 T300 45 T320 35" fill="none" stroke="#1E5BFF" stroke-width="2"/>
+                        <circle cx="260" cy="40" r="4" fill="#1E5BFF"/>
+                        <text x="262" y="30" fill="#5f6368" font-size="10">€1.987,65</text>
+                        <text x="135" y="108" fill="#5f6368" font-size="10">€1.456,78</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Time Tabs -->
+            <div class="time-tabs">
+                <button class="time-tab">LIVE</button>
+                <button class="time-tab active">1D</button>
+                <button class="time-tab">7D</button>
+                <button class="time-tab">30D</button>
+                <button class="time-tab">1Y</button>
+                <button class="time-tab">ALL</button>
+            </div>
+
+            <!-- Balance Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Balance</span>
+                    <span class="card-value">€ 1.434,57</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Amount</span>
+                    <span class="info-value">0,774457 ETH</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Unrealized P&L <span class="info-icon">i</span></span>
+                    <span class="info-value positive">+€187,50 (+2,78%)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Avg Cost <span class="info-icon">i</span></span>
+                    <span class="info-value">€2000,23</span>
+                </div>
+            </div>
+
+            <!-- Position Card -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Position <span class="position-badge">Short 2x</span></span>
+                    <span class="card-value">€ 106,00</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Unrealized P&L <span class="info-icon">i</span></span>
+                    <span class="info-value positive">+€6,00 (+6,00%)</span>
+                </div>
+            </div>
+
+            <!-- Earn Section -->
+            <div class="earn-section">
+                <h3>Earn ETH</h3>
+                <p>Earn 0,60% APY on your Ethereum with Staking. While trading as usual. Earned Daily, paid out weekly</p>
+                <button class="btn btn-outline btn-small">Enable Staking</button>
+            </div>
+
+            <!-- Insights Section -->
+            <div class="insights-section">
+                <div class="insights-header">
+                    <h3 class="card-title">Insights</h3>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8892b0" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </div>
+                <div class="insight-card">
+                    <p class="insight-title">Trade sentiment <span class="info-icon">i</span></p>
+                    <p class="insight-subtitle">Last 24 hours</p>
+                    <div class="sentiment-bar">
+                        <div class="sell" style="width: 34%"></div>
+                        <div class="buy" style="width: 66%"></div>
+                    </div>
+                    <div class="sentiment-labels">
+                        <span class="sell-label">34%</span>
+                        <span class="buy-label">66%</span>
+                    </div>
+                    <p class="insight-subtitle" style="margin-top: 8px;">66% of the trades were <span class="text-negative">sell orders</span></p>
+                </div>
+            </div>
+
+            <!-- Spacer for bottom bar -->
+            <div style="height: 100px;"></div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <a href="scenario-1-goal.html" class="btn btn-primary">Buy</a>
+            <button class="btn btn-primary">Sell</button>
+            <button class="btn btn-secondary btn-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

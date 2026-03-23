@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Limit Order Simulation - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sim-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #fef3e0 0%, #fff8e7 100%);
+            border: 1px solid #f9a825;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sim-badge svg {
+            color: #f9a825;
+        }
+
+        .sim-badge span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e65100;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explain-header {
+            padding: 24px 20px;
+        }
+
+        .explain-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .explain-header .subtitle {
+            font-size: 15px;
+            color: #5f6368;
+            line-height: 1.5;
+        }
+
+        .content-section {
+            padding: 0 20px 24px;
+        }
+
+        .explain-visual {
+            padding: 24px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+            border-radius: 16px;
+            position: relative;
+            height: 160px;
+        }
+
+        .explain-visual svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .price-labels {
+            position: absolute;
+            right: 16px;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+
+        .price-label {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .price-label.current {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .price-label.target {
+            background: #1E5BFF;
+            color: #fff;
+        }
+
+        .limit-explanation {
+            background: #fff;
+            border: 1px solid #e8ecf2;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .limit-explanation h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .limit-explanation h3 .icon {
+            width: 32px;
+            height: 32px;
+            background: #e8f0fe;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1E5BFF;
+        }
+
+        .limit-explanation p {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.6;
+        }
+
+        .risk-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #fef3e0;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .risk-icon {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .risk-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 2px;
+        }
+
+        .risk-content p {
+            font-size: 13px;
+            color: #5f6368;
+            margin: 0;
+        }
+
+        .risk-level {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .risk-level span {
+            width: 24px;
+            height: 4px;
+            background: #e8ecf2;
+            border-radius: 2px;
+        }
+
+        .risk-level span.active {
+            background: #f9a825;
+        }
+
+        .sim-info-card {
+            background: linear-gradient(135deg, #1E5BFF 0%, #0D3BB5 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .sim-info-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sim-info-card h3 svg {
+            opacity: 0.8;
+        }
+
+        .sim-features {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .sim-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .sim-feature .check {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .sim-feature .check svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .sim-feature-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .sim-feature-content p {
+            font-size: 13px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .no-risk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            margin-top: 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .bottom-spacer {
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="scenario-3.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="nav-actions">
+                <button class="nav-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Header -->
+            <div class="explain-header">
+                <div class="sim-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+                    </svg>
+                    <span>Simulation Mode</span>
+                </div>
+                <h1>Limit Order</h1>
+                <p class="subtitle">Set a target price and buy automatically when it's reached</p>
+            </div>
+
+            <!-- Content -->
+            <div class="content-section">
+                <!-- Visual -->
+                <div class="explain-visual">
+                    <svg viewBox="0 0 280 120" preserveAspectRatio="none">
+                        <!-- Current price dashed line -->
+                        <line x1="0" y1="35" x2="220" y2="35" stroke="#1a1a2e" stroke-width="1" stroke-dasharray="4 4"/>
+                        
+                        <!-- Target price dashed line -->
+                        <line x1="0" y1="85" x2="220" y2="85" stroke="#1E5BFF" stroke-width="2" stroke-dasharray="6 4"/>
+                        
+                        <!-- Price chart line -->
+                        <path d="M0 60 Q30 55 50 50 T90 40 T130 35 T170 38 T200 32 T240 28" 
+                              fill="none" stroke="#8892b0" stroke-width="2" opacity="0.5"/>
+                        
+                        <!-- Arrow pointing down -->
+                        <path d="M140 50 L140 80" stroke="#1E5BFF" stroke-width="2"/>
+                        <path d="M135 75 L140 82 L145 75" stroke="#1E5BFF" stroke-width="2" fill="none"/>
+                    </svg>
+
+                    <div class="price-labels">
+                        <span class="price-label current">Current</span>
+                        <span class="price-label target">Your target</span>
+                    </div>
+                </div>
+
+                <!-- Limit Order Explanation -->
+                <div class="limit-explanation">
+                    <h3>
+                        <span class="icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v18h18"/>
+                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                            </svg>
+                        </span>
+                        What is a Limit Order?
+                    </h3>
+                    <p>A limit order lets you set a specific price at which you want to buy. Instead of buying immediately at the current price, you wait for the market to drop to your target. When it does, your purchase happens automatically.</p>
+                </div>
+
+                <!-- Risk Indicator -->
+                <div class="risk-indicator">
+                    <div class="risk-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f9a825" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="risk-content">
+                        <h4>Medium risk level</h4>
+                        <p>Order may not execute if price never reaches target</p>
+                        <div class="risk-level">
+                            <span class="active"></span>
+                            <span class="active"></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Info Card -->
+                <div class="sim-info-card">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+                        </svg>
+                        Try it in simulation
+                    </h3>
+
+                    <div class="sim-features">
+                        <div class="sim-feature">
+                            <div class="check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="sim-feature-content">
+                                <h4>Real-time try-out</h4>
+                                <p>Practice placing orders just like you would for real</p>
+                            </div>
+                        </div>
+
+                        <div class="sim-feature">
+                            <div class="check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="sim-feature-content">
+                                <h4>Using real data</h4>
+                                <p>See how Ethereum is actually behaving right now</p>
+                            </div>
+                        </div>
+
+                        <div class="sim-feature">
+                            <div class="check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </div>
+                            <div class="sim-feature-content">
+                                <h4>No real money</h4>
+                                <p>Learn without any financial risk whatsoever</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="no-risk-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        100% risk-free learning
+                    </div>
+                </div>
+
+                <div class="bottom-spacer"></div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <a href="scenario-3-simulation.html" class="btn btn-primary" style="width: 100%;">Start simulation</a>
+        </div>
+    </div>
+</body>
+</html>

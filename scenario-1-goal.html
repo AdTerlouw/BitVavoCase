@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>What's your goal? - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .goal-header {
+            padding: 24px 20px;
+            text-align: center;
+        }
+        
+        .goal-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        
+        .goal-header p {
+            font-size: 15px;
+            color: #5f6368;
+            line-height: 1.5;
+        }
+
+        .goal-options {
+            padding: 0 20px;
+        }
+
+        .goal-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #e8ecf2;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .goal-card:hover, .goal-card:active {
+            background: #f8fafc;
+            border-color: #1E5BFF;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.1);
+        }
+
+        .goal-card.selected {
+            border-color: #1E5BFF;
+            background: #f0f7ff;
+        }
+
+        .goal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #e8f0fe;
+            color: #1E5BFF;
+        }
+
+        .goal-icon.green {
+            background: #e6f4ea;
+            color: #1e8e3e;
+        }
+
+        .goal-icon.orange {
+            background: #fef3e0;
+            color: #e65100;
+        }
+
+        .goal-icon.purple {
+            background: #f3e8fd;
+            color: #7c3aed;
+        }
+
+        .goal-content {
+            flex: 1;
+        }
+
+        .goal-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .goal-content p {
+            font-size: 13px;
+            color: #5f6368;
+            line-height: 1.4;
+        }
+
+        .goal-arrow {
+            flex-shrink: 0;
+            color: #8892b0;
+            margin-top: 4px;
+        }
+
+        .crypto-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f5f7fa;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .crypto-badge svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .crypto-badge span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a1a2e;
+        }
+
+        .crypto-badge .price {
+            color: #5f6368;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="scenario-1.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="nav-actions">
+                <button class="nav-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Goal Header -->
+        <div class="goal-header">
+            <div class="crypto-badge">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M24 4L12 24L24 32L36 24L24 4Z" fill="#627EEA"/>
+                    <path d="M24 34L12 26L24 44L36 26L24 34Z" fill="#627EEA"/>
+                </svg>
+                <span>Ethereum ETH</span>
+                <span class="price">€ 1.865,4</span>
+            </div>
+            <h1>What's your goal?</h1>
+            <p>Select how you'd like to buy Ethereum</p>
+        </div>
+
+        <!-- Goal Options -->
+        <div class="goal-options">
+            <a href="#" class="goal-card">
+                <div class="goal-icon green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="goal-content">
+                    <h3>Buy at market price</h3>
+                    <p>Purchase ETH instantly at the current market rate</p>
+                </div>
+                <span class="goal-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+
+            <a href="scenario-1-explain.html" class="goal-card">
+                <div class="goal-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                    </svg>
+                </div>
+                <div class="goal-content">
+                    <h3>Buy at specific price</h3>
+                    <p>Set a limit order to buy when the price drops to your target</p>
+                </div>
+                <span class="goal-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+
+            <a href="#" class="goal-card">
+                <div class="goal-icon orange">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                        <path d="M13 13l6 6"/>
+                    </svg>
+                </div>
+                <div class="goal-content">
+                    <h3>Profit from a price drop</h3>
+                    <p>Open a short position to profit when the price decreases</p>
+                </div>
+                <span class="goal-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+
+            <a href="#" class="goal-card">
+                <div class="goal-icon purple">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>
+                    </svg>
+                </div>
+                <div class="goal-content">
+                    <h3>I'm not sure yet</h3>
+                    <p>Learn more about the different options available</p>
+                </div>
+                <span class="goal-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

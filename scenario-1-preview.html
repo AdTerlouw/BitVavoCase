@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Order Preview - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .preview-header {
+            text-align: center;
+            padding: 24px 20px 32px;
+        }
+
+        .preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: #e6f4ea;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-badge svg {
+            color: #1e8e3e;
+        }
+
+        .preview-badge span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e8e3e;
+        }
+
+        .preview-amount {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .preview-value {
+            font-size: 15px;
+            color: #5f6368;
+        }
+
+        .preview-section {
+            padding: 0 20px;
+            margin-bottom: 24px;
+        }
+
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #e8ecf2;
+        }
+
+        .preview-row:last-child {
+            border-bottom: none;
+        }
+
+        .preview-label {
+            font-size: 15px;
+            color: #5f6368;
+        }
+
+        .preview-data {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            text-align: right;
+        }
+
+        .preview-data.type {
+            color: #1E5BFF;
+        }
+
+        .preview-data.muted {
+            color: #5f6368;
+            font-weight: 400;
+        }
+
+        .advanced-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-top: 1px solid #e8ecf2;
+            border-bottom: 1px solid #e8ecf2;
+            cursor: pointer;
+        }
+
+        .advanced-toggle span {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .advanced-toggle svg {
+            color: #5f6368;
+            transition: transform 0.2s;
+        }
+
+        .section-divider {
+            height: 8px;
+            background: #f5f7fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="scenario-1-order.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <span style="font-size: 17px; font-weight: 600; color: #1a1a2e;">Order preview</span>
+            <span style="width: 40px;"></span>
+        </nav>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Preview Header -->
+            <div class="preview-header">
+                <div class="preview-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 19V5M5 12l7-7 7 7"/>
+                    </svg>
+                    <span>Buy</span>
+                </div>
+                <h1 class="preview-amount">0,01 ETH</h1>
+                <p class="preview-value">You pay: ≈€ 16,83</p>
+            </div>
+
+            <!-- Order Details -->
+            <div class="preview-section">
+                <div class="preview-row">
+                    <span class="preview-label">Type</span>
+                    <span class="preview-data type">Limit Buy</span>
+                </div>
+                <div class="preview-row">
+                    <span class="preview-label">Order price</span>
+                    <span class="preview-data">€ 1.678,86</span>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Amount Details -->
+            <div class="preview-section" style="padding-top: 16px;">
+                <div class="preview-row">
+                    <span class="preview-label">Amount</span>
+                    <span class="preview-data">0,01 ETH</span>
+                </div>
+                <div class="preview-row">
+                    <span class="preview-label">Est. Amount Euro</span>
+                    <span class="preview-data muted">≈€ 16,79</span>
+                </div>
+                <div class="preview-row">
+                    <span class="preview-label">Est. Fee (max 0.25%)</span>
+                    <span class="preview-data muted">≈€ 0,04</span>
+                </div>
+            </div>
+
+            <!-- Advanced Toggle -->
+            <div class="advanced-toggle">
+                <span>Advanced</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </div>
+
+            <!-- Spacer for bottom bar -->
+            <div style="height: 120px;"></div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <a href="index.html" class="btn btn-primary" style="width: 100%;">Confirm buy order</a>
+        </div>
+    </div>
+</body>
+</html>

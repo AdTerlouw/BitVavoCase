@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Limit Order - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .order-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px 16px;
+        }
+
+        .order-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .advanced-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1E5BFF;
+            text-decoration: none;
+        }
+
+        .crypto-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e8ecf2;
+        }
+
+        .crypto-row-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .crypto-row-left svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .crypto-row-left span {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .crypto-row-right {
+            font-size: 14px;
+            color: #1a1a2e;
+            font-weight: 500;
+        }
+
+        .order-tabs {
+            display: flex;
+            padding: 16px 20px;
+            gap: 24px;
+        }
+
+        .order-tab {
+            font-size: 16px;
+            font-weight: 600;
+            color: #8892b0;
+            background: none;
+            border: none;
+            padding: 8px 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .order-tab.active {
+            color: #1E5BFF;
+        }
+
+        .order-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1E5BFF;
+            border-radius: 1px;
+        }
+
+        .order-section {
+            padding: 20px;
+            border-bottom: 1px solid #e8ecf2;
+        }
+
+        .order-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .order-section p {
+            font-size: 13px;
+            color: #5f6368;
+            margin-bottom: 16px;
+        }
+
+        .price-input-group {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .price-input-label {
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 11px;
+            color: #5f6368;
+        }
+
+        .price-input {
+            width: 100%;
+            padding: 16px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+            border: 1px solid #e8ecf2;
+            border-radius: 12px;
+            background: #fff;
+            outline: none;
+        }
+
+        .price-input:focus {
+            border-color: #1E5BFF;
+        }
+
+        .price-input-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .price-input-suffix span {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .price-input-suffix .current-btn {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1E5BFF;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .quick-select {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            background: #f5f7fa;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover, .quick-btn.active {
+            background: #e8f0fe;
+            color: #1E5BFF;
+        }
+
+        .quantity-input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e8ecf2;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .quantity-input {
+            flex: 1;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a1a2e;
+            border: none;
+            background: #fff;
+            outline: none;
+        }
+
+        .quantity-suffix {
+            padding: 16px;
+            font-size: 14px;
+            color: #5f6368;
+            background: #f5f7fa;
+        }
+
+        .total-section {
+            padding: 20px;
+            border-bottom: 1px solid #e8ecf2;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .total-row.main {
+            margin-bottom: 16px;
+        }
+
+        .total-label {
+            font-size: 15px;
+            color: #1a1a2e;
+            font-weight: 500;
+        }
+
+        .total-value {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .total-value input {
+            width: 100px;
+            padding: 8px 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            border: 1px solid #e8ecf2;
+            border-radius: 8px;
+            text-align: right;
+            outline: none;
+        }
+
+        .total-value input:focus {
+            border-color: #1E5BFF;
+        }
+
+        .total-value span {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .max-btn {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1E5BFF;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .fee-label {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .fee-value {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .funds-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .funds-label {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .funds-value {
+            font-size: 13px;
+            color: #1E5BFF;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="scenario-1-explain.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <span class="order-title">Limit order</span>
+            <a href="#" class="advanced-link">Advanced</a>
+        </nav>
+
+        <!-- Crypto Row -->
+        <div class="crypto-row">
+            <div class="crypto-row-left">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M24 4L12 24L24 32L36 24L24 4Z" fill="#627EEA"/>
+                    <path d="M24 34L12 26L24 44L36 26L24 34Z" fill="#627EEA"/>
+                </svg>
+                <span>Ethereum ETH</span>
+            </div>
+            <span class="crypto-row-right">€ 1.865,4</span>
+        </div>
+
+        <!-- Order Tabs -->
+        <div class="order-tabs">
+            <button class="order-tab active">Buy</button>
+            <button class="order-tab">Sell</button>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Set Price Section -->
+            <div class="order-section">
+                <h3>Set your order price</h3>
+                <p>At which price do you want to buy?</p>
+                
+                <div class="price-input-group">
+                    <span class="price-input-label">Order price</span>
+                    <input type="text" class="price-input" id="orderPrice" value="1865,40" style="padding-right: 120px;">
+                    <div class="price-input-suffix">
+                        <span>EUR</span>
+                        <button class="current-btn" id="currentBtn">Current</button>
+                    </div>
+                </div>
+
+                <div class="quick-select">
+                    <button class="quick-btn" data-percent="-1">-1%</button>
+                    <button class="quick-btn" data-percent="-2">-2%</button>
+                    <button class="quick-btn" data-percent="-5">-5%</button>
+                    <button class="quick-btn" data-percent="-10">-10%</button>
+                </div>
+            </div>
+
+            <!-- Select Quantity Section -->
+            <div class="order-section">
+                <h3>Select quantity</h3>
+                <p>How much do you want to buy when the order price is reached?</p>
+                
+                <div class="quantity-input-group">
+                    <input type="text" class="quantity-input" id="quantityETH" placeholder="0">
+                    <span class="quantity-suffix">ETH</span>
+                </div>
+            </div>
+
+            <!-- Total Section -->
+            <div class="total-section">
+                <div class="total-row main">
+                    <span class="total-label">Total (excl. fee)</span>
+                    <div class="total-value">
+                        <input type="text" id="totalEUR" placeholder="0,00">
+                        <span>EUR</span>
+                        <button class="max-btn">Max</button>
+                    </div>
+                </div>
+
+                <div class="fee-row">
+                    <span class="fee-label">Fee (max 0.25%)</span>
+                    <span class="fee-value" id="feeValue">≈€ 0,00</span>
+                </div>
+
+                <div class="funds-row">
+                    <span class="funds-label">Your available funds:</span>
+                    <span class="funds-value">€ 2.500,00</span>
+                </div>
+            </div>
+
+            <!-- Spacer for bottom bar -->
+            <div style="height: 100px;"></div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <a href="scenario-1-preview.html" class="btn btn-primary" style="width: 100%;">Preview buy order</a>
+        </div>
+    </div>
+
+    <script>
+        const BASE_PRICE = 1865.40;
+        let currentOrderPrice = BASE_PRICE;
+
+        const orderPriceInput = document.getElementById('orderPrice');
+        const quantityETHInput = document.getElementById('quantityETH');
+        const totalEURInput = document.getElementById('totalEUR');
+        const feeValue = document.getElementById('feeValue');
+        const currentBtn = document.getElementById('currentBtn');
+        const quickBtns = document.querySelectorAll('.quick-btn');
+
+        function formatNumber(num, decimals = 2) {
+            return num.toFixed(decimals).replace('.', ',');
+        }
+
+        function parseNumber(str) {
+            if (!str) return 0;
+            return parseFloat(str.replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
+        }
+
+        function updateFee(eurAmount) {
+            const fee = eurAmount * 0.0025;
+            feeValue.textContent = `≈€ ${formatNumber(fee)}`;
+        }
+
+        function setActiveQuickBtn(percent) {
+            quickBtns.forEach(btn => {
+                const btnPercent = parseInt(btn.dataset.percent);
+                if (btnPercent === percent) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function calculatePercentFromPrice(price) {
+            const diff = ((price - BASE_PRICE) / BASE_PRICE) * 100;
+            return Math.round(diff);
+        }
+
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const percent = parseInt(btn.dataset.percent);
+                currentOrderPrice = BASE_PRICE * (1 + percent / 100);
+                orderPriceInput.value = formatNumber(currentOrderPrice);
+                setActiveQuickBtn(percent);
+                
+                const ethAmount = parseNumber(quantityETHInput.value);
+                if (ethAmount > 0) {
+                    const eurAmount = ethAmount * currentOrderPrice;
+                    totalEURInput.value = formatNumber(eurAmount);
+                    updateFee(eurAmount);
+                }
+            });
+        });
+
+        currentBtn.addEventListener('click', () => {
+            currentOrderPrice = BASE_PRICE;
+            orderPriceInput.value = formatNumber(BASE_PRICE);
+            setActiveQuickBtn(0);
+            
+            const ethAmount = parseNumber(quantityETHInput.value);
+            if (ethAmount > 0) {
+                const eurAmount = ethAmount * currentOrderPrice;
+                totalEURInput.value = formatNumber(eurAmount);
+                updateFee(eurAmount);
+            }
+        });
+
+        orderPriceInput.addEventListener('input', () => {
+            currentOrderPrice = parseNumber(orderPriceInput.value);
+            const percent = calculatePercentFromPrice(currentOrderPrice);
+            setActiveQuickBtn(percent);
+            
+            const ethAmount = parseNumber(quantityETHInput.value);
+            if (ethAmount > 0) {
+                const eurAmount = ethAmount * currentOrderPrice;
+                totalEURInput.value = formatNumber(eurAmount);
+                updateFee(eurAmount);
+            }
+        });
+
+        quantityETHInput.addEventListener('input', () => {
+            const ethAmount = parseNumber(quantityETHInput.value);
+            const eurAmount = ethAmount * currentOrderPrice;
+            totalEURInput.value = ethAmount > 0 ? formatNumber(eurAmount) : '';
+            updateFee(eurAmount);
+        });
+
+        totalEURInput.addEventListener('input', () => {
+            const eurAmount = parseNumber(totalEURInput.value);
+            const ethAmount = eurAmount / currentOrderPrice;
+            quantityETHInput.value = eurAmount > 0 ? formatNumber(ethAmount, 6) : '';
+            updateFee(eurAmount);
+        });
+    </script>
+</body>
+</html>

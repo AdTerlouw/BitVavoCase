@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Crypto Platform - Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: #1E5BFF;
+        }
+        .mobile-frame.index-frame {
+            background: linear-gradient(180deg, #1E5BFF 0%, #0D3BB5 100%);
+        }
+        .index-frame .status-bar {
+            color: #ffffff;
+        }
+        .index-frame .status-icons {
+            color: #ffffff;
+        }
+        .index-frame .header h1 {
+            color: #ffffff;
+        }
+        .index-frame .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .index-frame .section-title {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .index-frame .scenario-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .index-frame .scenario-card:hover,
+        .index-frame .scenario-card:active {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        .index-frame .footer {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .index-frame .intro {
+            padding: 24px 20px 8px;
+        }
+        .index-frame .intro h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .index-frame .intro p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            text-align: left;
+        }
+        .index-frame .scenario-content p {
+            color: #1a1a2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame index-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Intro -->
+        <div class="intro">
+            <h1>AI-generated prototypes</h1>
+            <p>This prototype shows the three solution directions to consider. Although interactive they are not on-brand: the idea is to quickly visualise an idea.</p>
+        </div>
+
+        <!-- Scenarios -->
+        <div class="scenarios-section">
+            <h2 class="section-title">Select Scenario</h2>
+            
+            <a href="scenario-1.html" class="scenario-card">
+                <div class="scenario-icon blue">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/>
+                        <path d="M18 9l-5 5-4-4-3 3"/>
+                    </svg>
+                </div>
+                <div class="scenario-content">
+                    <h3>Traditional Update</h3>
+                    <p>Advanced trading options explained step-by-step</p>
+                </div>
+                <span class="scenario-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8892B0" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+
+            <a href="scenario-2.html" class="scenario-card">
+                <div class="scenario-icon green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="scenario-content">
+                    <h3>Simplification</h3>
+                    <p>Coffee metaphor + quiz before trading</p>
+                </div>
+                <span class="scenario-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8892B0" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+
+            <a href="scenario-3.html" class="scenario-card">
+                <div class="scenario-icon orange">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="scenario-content">
+                    <h3>Simulation 'push'</h3>
+                    <p>Proactive prompt + risk-free simulation</p>
+                </div>
+                <span class="scenario-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8892B0" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Prototype Version 1.0</p>
+        </footer>
+    </div>
+</body>
+</html>

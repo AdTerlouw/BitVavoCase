@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Place Order - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 16px;
+        }
+
+        .order-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .order-tabs {
+            display: flex;
+            gap: 16px;
+        }
+
+        .order-tab {
+            font-size: 15px;
+            font-weight: 600;
+            color: #8892b0;
+            background: none;
+            border: none;
+            padding: 8px 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .order-tab.active {
+            color: #1E5BFF;
+        }
+
+        .order-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1E5BFF;
+            border-radius: 1px;
+        }
+
+        .chart-interactive {
+            position: relative;
+            height: 220px;
+            margin: 0 20px 20px;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .current-price-label {
+            position: absolute;
+            right: 8px;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .drag-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: transparent;
+            cursor: ns-resize;
+            transition: top 0.15s ease-out;
+        }
+
+        .drag-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 60px;
+            top: 0;
+            height: 2px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                #1E5BFF,
+                #1E5BFF 8px,
+                transparent 8px,
+                transparent 14px
+            );
+        }
+
+        .drag-handle {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: #1E5BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+            cursor: ns-resize;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .drag-handle:active, .drag-handle.dragging {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.5);
+        }
+
+        .drag-handle svg {
+            color: #fff;
+        }
+
+        .drag-tooltip {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #1E5BFF;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .drag-tooltip.visible {
+            opacity: 1;
+        }
+
+        .drag-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 6px solid #1E5BFF;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .price-indicator {
+            position: absolute;
+            right: 8px;
+            background: #1E5BFF;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            pointer-events: none;
+            transform: translateY(8px);
+        }
+
+        .order-section {
+            padding: 20px;
+            border-top: 1px solid #e8ecf2;
+        }
+
+        .order-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .order-section p {
+            font-size: 13px;
+            color: #5f6368;
+            margin-bottom: 16px;
+        }
+
+        .price-input-group {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .price-input-label {
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 11px;
+            color: #5f6368;
+        }
+
+        .price-input {
+            width: 100%;
+            padding: 16px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+            border: 1px solid #e8ecf2;
+            border-radius: 12px;
+            background: #fff;
+            outline: none;
+            padding-right: 80px;
+        }
+
+        .price-input:focus {
+            border-color: #1E5BFF;
+        }
+
+        .price-input-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .quick-select {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            background: #f5f7fa;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover, .quick-btn.active {
+            background: #e8f0fe;
+            color: #1E5BFF;
+        }
+
+        .quantity-section {
+            padding: 20px;
+            border-top: 1px solid #e8ecf2;
+        }
+
+        .quantity-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .quantity-section p {
+            font-size: 13px;
+            color: #5f6368;
+            margin-bottom: 16px;
+        }
+
+        .quantity-toggle {
+            display: flex;
+            background: #f5f7fa;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #5f6368;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background: #fff;
+            color: #1a1a2e;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .quantity-input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e8ecf2;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .quantity-input {
+            flex: 1;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a1a2e;
+            border: none;
+            background: #fff;
+            outline: none;
+        }
+
+        .quantity-suffix {
+            padding: 16px;
+            font-size: 14px;
+            color: #5f6368;
+            background: #f5f7fa;
+        }
+
+        .total-section {
+            padding: 20px;
+            border-top: 1px solid #e8ecf2;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .fee-label {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .fee-value {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .funds-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+
+        .funds-label {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .funds-value {
+            font-size: 13px;
+            color: #1E5BFF;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="scenario-2-quiz.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="nav-actions"></div>
+        </nav>
+
+        <!-- Order Header -->
+        <div class="order-header">
+            <h1 class="order-title">Place Order</h1>
+            <div class="order-tabs">
+                <button class="order-tab active">Buy</button>
+                <button class="order-tab">Sell</button>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Interactive Chart -->
+            <div class="chart-interactive" id="chartArea">
+                <svg class="chart-svg" viewBox="0 0 350 200" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="chartGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#1E5BFF;stop-opacity:0.15"/>
+                            <stop offset="100%" style="stop-color:#1E5BFF;stop-opacity:0"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- Chart area fill -->
+                    <path d="M0 140 Q35 135 55 120 T95 100 T135 115 T175 70 T215 75 T255 55 T295 60 T330 50 T350 45 V200 H0 Z" fill="url(#chartGradient2)"/>
+                    <!-- Chart line -->
+                    <path d="M0 140 Q35 135 55 120 T95 100 T135 115 T175 70 T215 75 T255 55 T295 60 T330 50 T350 45" fill="none" stroke="#1E5BFF" stroke-width="2.5"/>
+                    <!-- Current price dot -->
+                    <circle cx="330" cy="50" r="5" fill="#1E5BFF"/>
+                </svg>
+                
+                <!-- Current price label -->
+                <div class="current-price-label" style="top: 42px;">€ 1.865,40</div>
+
+                <!-- Draggable line -->
+                <div class="drag-line" id="dragLine" style="top: 130px;">
+                    <div class="drag-tooltip" id="dragTooltip">€ 1.678,86</div>
+                    <div class="drag-handle" id="dragHandle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5l-4 4h8l-4-4z" fill="currentColor"/>
+                            <path d="M12 19l-4-4h8l-4 4z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Order price label -->
+                <div class="price-indicator" id="priceIndicator" style="top: 138px;">€ 1.678,86</div>
+            </div>
+
+            <!-- Order Price Section -->
+            <div class="order-section">
+                <h3>Order Price</h3>
+                <p>Drag the line above or enter a price below</p>
+                
+                <div class="price-input-group">
+                    <span class="price-input-label">Order price</span>
+                    <input type="text" class="price-input" id="orderPrice" value="1678,86">
+                    <span class="price-input-suffix">EUR</span>
+                </div>
+
+                <div class="quick-select">
+                    <button class="quick-btn" data-percent="-1">-1%</button>
+                    <button class="quick-btn" data-percent="-2">-2%</button>
+                    <button class="quick-btn" data-percent="-5">-5%</button>
+                    <button class="quick-btn active" data-percent="-10">-10%</button>
+                </div>
+            </div>
+
+            <!-- Quantity Section -->
+            <div class="quantity-section">
+                <h3>Quantity</h3>
+                <p>How much do you want to buy?</p>
+
+                <div class="quantity-toggle">
+                    <button class="toggle-btn active" id="toggleETH">ETH</button>
+                    <button class="toggle-btn" id="toggleEUR">EUR</button>
+                </div>
+                
+                <div class="quantity-input-group">
+                    <input type="text" class="quantity-input" id="quantityInput" placeholder="0">
+                    <span class="quantity-suffix" id="quantitySuffix">ETH</span>
+                </div>
+            </div>
+
+            <!-- Total Section -->
+            <div class="total-section">
+                <div class="fee-row">
+                    <span class="fee-label">Est. Total</span>
+                    <span class="fee-value" id="estTotal">€ 0,00</span>
+                </div>
+                <div class="fee-row">
+                    <span class="fee-label">Fee (max 0.25%)</span>
+                    <span class="fee-value" id="feeValue">≈€ 0,00</span>
+                </div>
+                <div class="funds-row">
+                    <span class="funds-label">Your available funds:</span>
+                    <span class="funds-value">€ 2.500,00</span>
+                </div>
+            </div>
+
+            <!-- Spacer for bottom bar -->
+            <div style="height: 100px;"></div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-bar">
+            <a href="scenario-2-preview.html" class="btn btn-primary" style="width: 100%;">Preview buy order</a>
+        </div>
+    </div>
+
+    <script>
+        const BASE_PRICE = 1865.40;
+        const MIN_PRICE = 1400;
+        const CHART_TOP = 60;
+        const CHART_BOTTOM = 180;
+        
+        let currentOrderPrice = 1678.86;
+        let isDragging = false;
+        let inputMode = 'ETH';
+
+        const chartArea = document.getElementById('chartArea');
+        const dragLine = document.getElementById('dragLine');
+        const dragHandle = document.getElementById('dragHandle');
+        const dragTooltip = document.getElementById('dragTooltip');
+        const priceIndicator = document.getElementById('priceIndicator');
+        const orderPriceInput = document.getElementById('orderPrice');
+        const quantityInput = document.getElementById('quantityInput');
+        const quantitySuffix = document.getElementById('quantitySuffix');
+        const estTotal = document.getElementById('estTotal');
+        const feeValue = document.getElementById('feeValue');
+        const quickBtns = document.querySelectorAll('.quick-btn');
+        const toggleETH = document.getElementById('toggleETH');
+        const toggleEUR = document.getElementById('toggleEUR');
+
+        function formatNumber(num, decimals = 2) {
+            return num.toFixed(decimals).replace('.', ',');
+        }
+
+        function parseNumber(str) {
+            if (!str) return 0;
+            return parseFloat(str.replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
+        }
+
+        function priceToPosition(price) {
+            const priceRange = BASE_PRICE - MIN_PRICE;
+            const positionRange = CHART_BOTTOM - CHART_TOP;
+            const priceOffset = BASE_PRICE - price;
+            const position = CHART_TOP + (priceOffset / priceRange) * positionRange;
+            return Math.max(CHART_TOP + 20, Math.min(CHART_BOTTOM, position));
+        }
+
+        function positionToPrice(position) {
+            const priceRange = BASE_PRICE - MIN_PRICE;
+            const positionRange = CHART_BOTTOM - CHART_TOP;
+            const positionOffset = position - CHART_TOP;
+            const price = BASE_PRICE - (positionOffset / positionRange) * priceRange;
+            return Math.max(MIN_PRICE, Math.min(BASE_PRICE - 50, price));
+        }
+
+        function updateLinePosition(price, animate = true) {
+            const position = priceToPosition(price);
+            dragLine.style.transition = animate ? 'top 0.15s ease-out' : 'none';
+            dragLine.style.top = position + 'px';
+            priceIndicator.style.top = (position + 8) + 'px';
+            priceIndicator.textContent = '€ ' + formatNumber(price);
+            dragTooltip.textContent = '€ ' + formatNumber(price);
+        }
+
+        function updateOrderPrice(price) {
+            currentOrderPrice = price;
+            orderPriceInput.value = formatNumber(price);
+            updateLinePosition(price);
+            updateQuickBtns(price);
+            updateTotals();
+        }
+
+        function updateQuickBtns(price) {
+            const percentDiff = Math.round(((price - BASE_PRICE) / BASE_PRICE) * 100);
+            quickBtns.forEach(btn => {
+                const btnPercent = parseInt(btn.dataset.percent);
+                btn.classList.toggle('active', btnPercent === percentDiff);
+            });
+        }
+
+        function updateTotals() {
+            const quantity = parseNumber(quantityInput.value);
+            let ethAmount, eurAmount;
+            
+            if (inputMode === 'ETH') {
+                ethAmount = quantity;
+                eurAmount = quantity * currentOrderPrice;
+            } else {
+                eurAmount = quantity;
+                ethAmount = quantity / currentOrderPrice;
+            }
+            
+            estTotal.textContent = '€ ' + formatNumber(eurAmount);
+            feeValue.textContent = '≈€ ' + formatNumber(eurAmount * 0.0025);
+        }
+
+        // Drag functionality
+        function startDrag(e) {
+            isDragging = true;
+            dragHandle.classList.add('dragging');
+            dragTooltip.classList.add('visible');
+            dragLine.style.transition = 'none';
+            e.preventDefault();
+        }
+
+        function doDrag(e) {
+            if (!isDragging) return;
+            
+            const rect = chartArea.getBoundingClientRect();
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            let position = clientY - rect.top;
+            
+            position = Math.max(CHART_TOP + 20, Math.min(CHART_BOTTOM, position));
+            
+            const price = positionToPrice(position);
+            currentOrderPrice = price;
+            
+            dragLine.style.top = position + 'px';
+            priceIndicator.style.top = (position + 8) + 'px';
+            priceIndicator.textContent = '€ ' + formatNumber(price);
+            dragTooltip.textContent = '€ ' + formatNumber(price);
+            orderPriceInput.value = formatNumber(price);
+            
+            updateQuickBtns(price);
+            updateTotals();
+        }
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            dragHandle.classList.remove('dragging');
+            dragTooltip.classList.remove('visible');
+            dragLine.style.transition = 'top 0.15s ease-out';
+        }
+
+        dragHandle.addEventListener('mousedown', startDrag);
+        dragHandle.addEventListener('touchstart', startDrag);
+        document.addEventListener('mousemove', doDrag);
+        document.addEventListener('touchmove', doDrag);
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+
+        // Quick select buttons
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const percent = parseInt(btn.dataset.percent);
+                const newPrice = BASE_PRICE * (1 + percent / 100);
+                updateOrderPrice(newPrice);
+            });
+        });
+
+        // Order price input
+        orderPriceInput.addEventListener('input', () => {
+            const price = parseNumber(orderPriceInput.value);
+            if (price > 0 && price < BASE_PRICE) {
+                currentOrderPrice = price;
+                updateLinePosition(price);
+                updateQuickBtns(price);
+                updateTotals();
+            }
+        });
+
+        // Quantity input
+        quantityInput.addEventListener('input', updateTotals);
+
+        // Toggle buttons
+        toggleETH.addEventListener('click', () => {
+            inputMode = 'ETH';
+            toggleETH.classList.add('active');
+            toggleEUR.classList.remove('active');
+            quantitySuffix.textContent = 'ETH';
+            quantityInput.value = '';
+            updateTotals();
+        });
+
+        toggleEUR.addEventListener('click', () => {
+            inputMode = 'EUR';
+            toggleEUR.classList.add('active');
+            toggleETH.classList.remove('active');
+            quantitySuffix.textContent = 'EUR';
+            quantityInput.value = '';
+            updateTotals();
+        });
+
+        // Initialize
+        updateLinePosition(currentOrderPrice, false);
+    </script>
+</body>
+</html>

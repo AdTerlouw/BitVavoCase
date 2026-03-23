@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Simulation Result - CryptoFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .banner-container {
+            display: flex;
+            justify-content: center;
+            padding: 8px 20px;
+        }
+
+        .simulation-banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: #ffcc3d;
+            padding: 10px 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .simulation-banner .label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1a1a2e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        .simulation-banner .details {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .live-chart {
+            position: relative;
+            height: 200px;
+            margin: 12px 20px 16px;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 8px;
+            background: #ef5350;
+            border-radius: 6px;
+            z-index: 10;
+        }
+
+        .live-badge.success {
+            background: #1e8e3e;
+        }
+
+        .live-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .live-badge.success .dot {
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .live-badge span {
+            font-size: 10px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .target-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 140px;
+            height: 2px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                #1E5BFF,
+                #1E5BFF 8px,
+                transparent 8px,
+                transparent 14px
+            );
+        }
+
+        .target-label {
+            position: absolute;
+            right: 10px;
+            top: 146px;
+            background: #1E5BFF;
+            color: #fff;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .current-label {
+            position: absolute;
+            right: 10px;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            transition: top 0.5s ease-out;
+        }
+
+        .waiting-message {
+            padding: 16px 20px;
+            text-align: center;
+        }
+
+        .waiting-message p {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .result-section {
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .result-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .result-explanation {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .result-card {
+            background: #ffffff;
+            border: 1px solid #e8ecf2;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e8ecf2;
+        }
+
+        .result-header .success-icon {
+            width: 40px;
+            height: 40px;
+            background: #e6f4ea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .result-header .success-icon svg {
+            color: #1e8e3e;
+        }
+
+        .result-header-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e8e3e;
+            margin-bottom: 2px;
+        }
+
+        .result-header-text p {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+            padding-top: 12px;
+            margin-top: 4px;
+        }
+
+        .result-label {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .result-value {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1a1a2e;
+        }
+
+        .result-value.total {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .result-value.savings {
+            color: #1e8e3e;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0 20px 32px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease 0.15s;
+        }
+
+        .action-buttons.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .action-buttons .btn {
+            width: 100%;
+        }
+
+        .btn-yellow {
+            background: #ffcc3d;
+            color: #1a1a2e;
+        }
+
+        .btn-yellow:hover {
+            background: #f0be2e;
+        }
+
+        .btn-tertiary {
+            background: transparent;
+            color: #5f6368;
+            padding: 10px;
+        }
+
+        .btn-tertiary:hover {
+            color: #1a1a2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="signal">●●●●</span>
+                <span class="wifi">⚫</span>
+                <span class="battery">🔋</span>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="scenario-3-simulation.html" class="nav-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="nav-actions"></div>
+        </nav>
+
+        <!-- Simulation Banner with Details -->
+        <div class="banner-container">
+            <div class="simulation-banner">
+                <span class="label">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+                    </svg>
+                    Simulating
+                </span>
+                <span class="details">Buy € 839,43 when ETH is € 1.678,86</span>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Live Chart -->
+            <div class="live-chart">
+                <div class="live-badge" id="liveBadge">
+                    <span class="dot"></span>
+                    <span id="badgeText">Live</span>
+                </div>
+                
+                <svg class="chart-svg" viewBox="0 0 350 180" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="liveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#1E5BFF;stop-opacity:0.15"/>
+                            <stop offset="100%" style="stop-color:#1E5BFF;stop-opacity:0"/>
+                        </linearGradient>
+                    </defs>
+                    <path id="chartFill" d="" fill="url(#liveGradient)"/>
+                    <path id="chartLine" d="" fill="none" stroke="#1E5BFF" stroke-width="2.5"/>
+                    <circle id="chartDot" cx="340" cy="50" r="5" fill="#1E5BFF"/>
+                </svg>
+
+                <div class="target-line"></div>
+                <div class="target-label">€ 1.678,86</div>
+                <div class="current-label" id="currentLabel" style="top: 42px;">€ 1.865,40</div>
+            </div>
+
+            <!-- Waiting Message -->
+            <div class="waiting-message" id="waitingMessage">
+                <p>Watching the market for your target price...</p>
+            </div>
+
+            <!-- Result Section (hidden initially) -->
+            <div class="result-section" id="resultSection">
+                <h2 class="result-title">This is what happened</h2>
+                <p class="result-explanation">You placed a limit order to buy 0,5 ETH at € 1.678,86. The market price dropped to your target, and your order was automatically executed.</p>
+                
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="success-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <path d="M20 6L9 17l-5-5"/>
+                            </svg>
+                        </div>
+                        <div class="result-header-text">
+                            <h3>Order executed!</h3>
+                            <p>Your limit order would have filled</p>
+                        </div>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Amount</span>
+                        <span class="result-value">0,5 ETH</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Your limit price</span>
+                        <span class="result-value">€ 1.678,86</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Market price was</span>
+                        <span class="result-value">€ 1.865,40</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">You would save</span>
+                        <span class="result-value savings">€ 93,27 (10%)</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Total cost</span>
+                        <span class="result-value total">€ 839,43</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons (hidden initially) -->
+            <div class="action-buttons" id="actionButtons">
+                <a href="index.html" class="btn btn-primary">Place a real order</a>
+                <a href="index.html" class="btn btn-yellow">Run another simulation</a>
+                <a href="index.html" class="btn btn-tertiary">Close</a>
+            </div>
+
+            <div style="height: 20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const chartLine = document.getElementById('chartLine');
+        const chartFill = document.getElementById('chartFill');
+        const chartDot = document.getElementById('chartDot');
+        const currentLabel = document.getElementById('currentLabel');
+        const liveBadge = document.getElementById('liveBadge');
+        const badgeText = document.getElementById('badgeText');
+        const waitingMessage = document.getElementById('waitingMessage');
+        const resultSection = document.getElementById('resultSection');
+        const actionButtons = document.getElementById('actionButtons');
+
+        const duration = 5000;
+        const startY = 50;
+        const targetY = 140;
+        const startPrice = 1865.40;
+        const targetPrice = 1678.86;
+        
+        let dataPoints = [];
+        const maxPoints = 60;
+        let offset = 0;
+        
+        function initializeData() {
+            for (let i = 0; i < maxPoints; i++) {
+                const baseY = startY + Math.sin(i * 0.15) * 12 + Math.random() * 8 - 4;
+                dataPoints.push(Math.max(35, Math.min(170, baseY)));
+            }
+        }
+
+        function formatPrice(price) {
+            return '€ ' + price.toFixed(2).replace('.', ',');
+        }
+
+        function generatePath(points, forFill = false) {
+            if (points.length < 2) return '';
+            
+            const width = 350;
+            const step = width / (points.length - 1);
+            
+            let path = `M0 ${points[0]}`;
+            
+            for (let i = 1; i < points.length; i++) {
+                const x = i * step;
+                const y = points[i];
+                path += ` L${x} ${y}`;
+            }
+            
+            if (forFill) {
+                path += ' V180 H0 Z';
+            }
+            
+            return path;
+        }
+
+        function yToPrice(y) {
+            const ratio = (y - startY) / (targetY - startY);
+            return startPrice - ratio * (startPrice - targetPrice);
+        }
+
+        let startTime = null;
+        let completed = false;
+
+        function animate(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const currentTargetY = startY + (targetY - startY) * progress;
+            const fluctuation = Math.sin(elapsed * 0.008) * 6 * (1 - progress * 0.7);
+            const noise = (Math.random() - 0.5) * 4 * (1 - progress * 0.5);
+            const newY = currentTargetY + fluctuation + noise;
+            
+            offset += 0.5;
+            
+            dataPoints.shift();
+            dataPoints.push(Math.max(35, Math.min(170, newY)));
+            
+            const linePath = generatePath(dataPoints, false);
+            const fillPath = generatePath(dataPoints, true);
+            chartLine.setAttribute('d', linePath);
+            chartFill.setAttribute('d', fillPath);
+            
+            const lastY = dataPoints[dataPoints.length - 1];
+            chartDot.setAttribute('cy', lastY);
+            
+            const currentPrice = yToPrice(lastY);
+            currentLabel.style.top = (lastY - 8) + 'px';
+            currentLabel.textContent = formatPrice(Math.max(currentPrice, targetPrice));
+
+            if (lastY >= targetY && !completed) {
+                completed = true;
+                
+                liveBadge.classList.add('success');
+                badgeText.textContent = 'Filled';
+                
+                currentLabel.textContent = formatPrice(targetPrice);
+                currentLabel.style.top = '132px';
+                
+                setTimeout(() => {
+                    waitingMessage.style.display = 'none';
+                    resultSection.classList.add('visible');
+                    actionButtons.classList.add('visible');
+                }, 500);
+                
+                return;
+            }
+
+            if (!completed) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        initializeData();
+        
+        const linePath = generatePath(dataPoints, false);
+        const fillPath = generatePath(dataPoints, true);
+        chartLine.setAttribute('d', linePath);
+        chartFill.setAttribute('d', fillPath);
+        chartDot.setAttribute('cy', dataPoints[dataPoints.length - 1]);
+
+        setTimeout(() => {
+            requestAnimationFrame(animate);
+        }, 500);
+    </script>
+</body>
+</html>
