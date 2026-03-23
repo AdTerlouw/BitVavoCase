@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept Review - Prototype Feedback</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #000000;
+      background: #fff;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0051FF;
+      margin-bottom: 8px;
+    }
+
+    .date {
+      font-size: 14px;
+      color: #6B7280;
+    }
+
+    .turn {
+      margin: 24px 0;
+    }
+
+    .speaker {
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #6B7280;
+    }
+
+    .speaker .timestamp {
+      font-weight: 400;
+      color: #9CA3AF;
+      margin-right: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .speaker .name {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .speaker .separator {
+      margin: 0 6px;
+      color: #E5E7EB;
+    }
+
+    .speaker .role {
+      font-weight: 400;
+    }
+
+    .content {
+      padding-left: 0;
+    }
+
+    .content p {
+      margin-bottom: 12px;
+    }
+
+    .content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .content h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin: 20px 0 8px 0;
+    }
+
+    .content h3:first-child {
+      margin-top: 0;
+    }
+
+    .content strong {
+      font-weight: 600;
+    }
+
+    .content ul, .content ol {
+      margin: 8px 0 12px 20px;
+    }
+
+    .content li {
+      margin-bottom: 4px;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    .content table th,
+    .content table td {
+      padding: 8px 12px;
+      text-align: left;
+      border: 1px solid #E5E7EB;
+    }
+
+    .content table th {
+      background: #F9FAFB;
+      font-weight: 600;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #E5E7EB;
+      margin: 24px 0;
+    }
+
+    @media print {
+      body {
+        padding: 20px;
+      }
+
+      header {
+        margin-bottom: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Concept Review - Prototype Feedback</h1>
+    <div class="date">Sunday, March 22, 2026</div>
+  </header>
+
+  <main>
+    
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:00</span>
+        <span class="name">You</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Product Designer</span>
+      </div>
+      <div class="content">
+        <p>Hey both, I've got my first prototypes ready in the prototype/ folder. I'd like to walk you through the three scenarios:</p>
+        <ol>
+          <li>Traditional update</li>
+          <li>Simplification</li>
+          <li>Simulation push</li>
+        </ol>
+        <p>Then, I'd like to get your feedback per prototype:</p>
+        <ul>
+          <li>What are the parts you see as positive—valuable, interesting, or confident it solves a problem? Three points each.</li>
+          <li>For each scenario, what would be your main concern?</li>
+          <li>Dave, what are the estimated efforts? T-shirt size is fine, can be rough.</li>
+          <li>Pinar, for which one do you see the biggest opportunity, and the biggest risks?</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:05</span>
+        <span class="name">Pinar</span>
+        <span class="separator">—</span>
+        <span class="role">Product Manager</span>
+      </div>
+      <div class="content">
+        <p>Alright, I've gone through all three directions and I have to say—you've done a solid job visualizing distinct approaches to the same problem. Let me give you my structured feedback.</p>
+
+        <h3>Scenario 1: Traditional Update</h3>
+        <p><strong>Three positives:</strong></p>
+        <ol>
+          <li><strong>The goal-first framing ("What's your goal?") is smart.</strong> Instead of asking users to pick order types, you're asking about intent. That's a meaningful shift from our current approach where 60% of users default to simple orders because they don't understand the alternatives. Starting with intent could help bridge that gap.</li>
+          <li><strong>The risk indicator with the visual bar is clear and honest.</strong> Medium risk, two out of four bars—users immediately understand this isn't a "safe" button they're pressing. That's responsible design given our regulatory context.</li>
+          <li><strong>The step-by-step "how it works" breakdown is confidence-building.</strong> Three numbered steps demystify the process. It's exactly what our less experienced users need before committing.</li>
+        </ol>
+        <p><strong>Main concern:</strong><br>The flow is <em>long</em>. Goal selection → explanation → order form → preview. That's four screens minimum before a user places an order. Our power users—the ones who already understand limit orders—might find this patronizing. Have we thought about a "skip to order" shortcut for returning users? We risk adding friction for the users who don't need education.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:12</span>
+        <span class="name">Pinar</span>
+        <span class="separator">—</span>
+        <span class="role">Product Manager</span>
+      </div>
+      <div class="content">
+        <h3>Scenario 2: Simplification</h3>
+        <p><strong>Three positives:</strong></p>
+        <ol>
+          <li><strong>The coffee metaphor is genuinely clever.</strong> "Think of it like buying coffee"—that's accessible, relatable, and strips away the intimidation factor of financial jargon. It meets users where they are, especially beginners who might feel crypto is "not for them."</li>
+          <li><strong>The scenario tables showing three possible outcomes are excellent for expectation-setting.</strong> Users see exactly what <em>could</em> happen—price drops (you win), price never reaches (you miss out), price fluctuates (mixed feelings). This is the kind of transparency that builds trust, and it addresses our core tension around risk communication.</li>
+          <li><strong>The quiz before trading is a bold, trust-building move.</strong> It's a soft gate that ensures users actually understand what they're about to do. From a compliance perspective, this is gold. We could even track quiz completion rates against order success/failure rates.</li>
+        </ol>
+        <p><strong>Main concern:</strong><br>The quiz is also my biggest hesitation. It could feel like homework or a barrier, especially for users who just want to act quickly. What's the fallback if someone fails the quiz? Do we block them? That could feel punitive rather than educational. I'd want to see data on how users react to mandatory checkpoints in trading flows—my gut says there's a segment who'll bounce.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:18</span>
+        <span class="name">Pinar</span>
+        <span class="separator">—</span>
+        <span class="role">Product Manager</span>
+      </div>
+      <div class="content">
+        <h3>Scenario 3: Simulation Push</h3>
+        <p><strong>Three positives:</strong></p>
+        <ol>
+          <li><strong>The proactive prompt is a smart engagement mechanic.</strong> "Hi Ad, there's more to buying than you know!"—personalized, contextual, and meets users at a moment when they're already engaged (they're on the asset page). This addresses our discovery problem head-on.</li>
+          <li><strong>The simulation mode with real data but no real money is a game-changer.</strong> This directly solves the "fear of advanced features" problem. Users can experience a limit order executing without risking anything. The psychological safety here is huge for adoption.</li>
+          <li><strong>The interactive drag-to-set-price on the chart is delightful.</strong> It's tactile, visual, and immediately understandable. The user <em>feels</em> what they're doing. That's the kind of embodied learning that sticks.</li>
+        </ol>
+        <p><strong>Main concern:</strong><br>Timing and frequency of the bottom sheet prompt. If this pops up every time a user views an asset, it'll become annoying fast. We need smart triggers—first-time users, users who've only ever done market orders, users who hover on "advanced" options. Also, what happens after they run a simulation? Does it track their simulated orders? Can they see a history? The learning loop needs to be clear.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:24</span>
+        <span class="name">Pinar</span>
+        <span class="separator">—</span>
+        <span class="role">Product Manager</span>
+      </div>
+      <div class="content">
+        <h3>Biggest Opportunity & Biggest Risk</h3>
+        <p><strong>Biggest opportunity: Scenario 3 (Simulation Push).</strong><br>This is the most innovative of the three. It tackles both discovery <em>and</em> education in a way that feels native to the product rather than bolted on. If we nail the triggers and the post-simulation journey, this could meaningfully move adoption of advanced features while maintaining trust. It's also differentiated—I don't see competitors doing this well.</p>
+        <p><strong>Biggest risk: Also Scenario 3.</strong><br>The simulation feature is the most complex to build and the hardest to get right. If the simulation doesn't feel "real enough" (laggy updates, unrealistic price movements), it'll undermine trust rather than build it. And if users get comfortable winning in simulation mode but then lose money in real trading, we'll have a perception problem. We need to be really clear about the difference between simulation and reality.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:28</span>
+        <span class="name">Dave</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Developer</span>
+      </div>
+      <div class="content">
+        <p><em>nods thoughtfully</em></p>
+        <p>I've been looking at these from a feasibility standpoint. Let me walk through each.</p>
+
+        <h3>Estimated Effort (T-Shirt Sizing)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Effort</th>
+              <th>Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Traditional Update</strong></td>
+              <td><strong>Small (S)</strong></td>
+              <td>Mostly content and navigation. The UI components exist—cards, forms, inputs. The quick-select percentage buttons need some JS, the preview page is standard. Low complexity.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Simplification</strong></td>
+              <td><strong>Small-Medium (S-M)</strong></td>
+              <td>Similar to Scenario 1 in structure, but the quiz adds work. If we're building a proper quiz engine (tracking answers, showing feedback, possibly persisting completion state), that's a small backend piece plus frontend logic. Not huge, but more than Scenario 1.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Simulation Push</strong></td>
+              <td><strong>Large (L)</strong></td>
+              <td>This one's different. The bottom sheet trigger logic, the interactive drag-on-chart interaction, and especially the <em>real-time simulation result page</em> with animated price movement—that's meaningful front-end work. If we're showing "live" data that behaves realistically, we need to think about how we simulate price feeds. Do we replay historical data? Use algorithmic generation? That's architectural. Plus, we'll need to track simulation state per user if we want them to see their "simulated portfolio."</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:33</span>
+        <span class="name">Dave</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Developer</span>
+      </div>
+      <div class="content">
+        <h3>Scenario 1 Feedback</h3>
+        <p><strong>Three positives:</strong></p>
+        <ol>
+          <li>The visual chart in the explanation page is clean and communicates the concept quickly. I like that.</li>
+          <li>The form is well-structured—price input, quantity, fee display. Standard but solid.</li>
+          <li>The preview page is minimal and focused. No surprises.</li>
+        </ol>
+        <p><strong>Main concern:</strong><br>There's nothing here that excites me technically. It works, but it's incremental. The real question is whether "incremental" moves the needle on your 60% problem.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:36</span>
+        <span class="name">Dave</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Developer</span>
+      </div>
+      <div class="content">
+        <h3>Scenario 2 Feedback</h3>
+        <p><strong>Three positives:</strong></p>
+        <ol>
+          <li>The scenario tables are nicely done. Semantically clean, easy to render.</li>
+          <li>The quiz placeholder is simple to implement initially—we can start with basic multiple choice.</li>
+          <li>The coffee metaphor doesn't change the implementation, but it does make the content easier to write consistently.</li>
+        </ol>
+        <p><strong>Main concern:</strong><br>Quiz state management. Do we need to remember that a user passed the quiz? If so, that's user data we need to persist. If they fail, do we let them retry immediately? Does it reset? These are small decisions, but they compound.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:39</span>
+        <span class="name">Dave</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Developer</span>
+      </div>
+      <div class="content">
+        <h3>Scenario 3 Feedback</h3>
+        <p><strong>Three positives:</strong></p>
+        <ol>
+          <li>The drag interaction on the chart is the kind of front-end challenge I enjoy. It's achievable with proper touch handling and SVG manipulation.</li>
+          <li>The animated result page with price dropping is a nice touch. Using <code>requestAnimationFrame</code> for the animation is the right call—I saw that in the prototype.</li>
+          <li>The modular approach—simulation mode as a distinct "mode" within the trading flow—is architecturally clean if we design it well. It could be reusable across other order types.</li>
+        </ol>
+        <p><strong>Main concern:</strong><br>Real-time data. The prototype shows static behavior, but in production, if we're saying "using real data," we need live price feeds for the simulation. That's either WebSocket infrastructure or polling. Either way, it's a dependency on our market data layer. I'd want to scope that carefully before committing.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:42</span>
+        <span class="name">Dave</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Developer</span>
+      </div>
+      <div class="content">
+        <p><em>pauses</em></p>
+        <p>If I had to pick one to build, I'd lean toward Scenario 3 for impact, but I'd want to prototype the data layer first. The UI is doable. The question is how "real" the simulation needs to feel.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:44</span>
+        <span class="name">Pinar</span>
+        <span class="separator">—</span>
+        <span class="role">Product Manager</span>
+      </div>
+      <div class="content">
+        <p>That tracks with my thinking. Dave, if we were to stage this, could we start with a "time-accelerated replay" of historical data for simulations, rather than live feeds? That might simplify the initial build.</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:45</span>
+        <span class="name">Dave</span>
+        <span class="separator">—</span>
+        <span class="role">Lead Developer</span>
+      </div>
+      <div class="content">
+        <p><em>considers</em></p>
+        <p>Yeah, that could work. Replay historical 24-hour data at 10x speed, for example. Users still see realistic price movement, but we're not dependent on live infrastructure. We'd need to be clear in the UI that it's "based on recent market data" rather than "live."</p>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <div class="turn">
+      <div class="speaker">
+        <span class="timestamp">14:47</span>
+        <span class="name">Pinar</span>
+        <span class="separator">—</span>
+        <span class="role">Product Manager</span>
+      </div>
+      <div class="content">
+        <p>Let us know where you want to dig deeper. I have follow-up questions on all three, but I'll let you steer the conversation.</p>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
